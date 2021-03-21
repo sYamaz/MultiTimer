@@ -2,7 +2,7 @@
 //  CupNoodlesMusicTimerTests.swift
 //  CupNoodlesMusicTimerTests
 //
-//  Created by 山﨑駿 on 2021/02/16.
+//  Created by sYamaz on 2021/02/16.
 //
 
 import XCTest
