@@ -73,7 +73,6 @@ class AppDelegate : UIResponder, UIApplicationDelegate, UNUserNotificationCenter
 @main
 struct SilentTimerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    
     @Injected var initializer:StateInitializerDelegate
     var body: some Scene {
         WindowGroup {

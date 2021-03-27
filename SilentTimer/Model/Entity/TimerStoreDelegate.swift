@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import Combine
 protocol TimerStoreDelegate{
-    func observe(observer:TimerStoreObserver)
+    func observe(id:UUID, observer:TimerStoreObserver)
     func getKeys() -> [String]
     func getDueDate(fromKey:String) -> Date
     func getIsPaused(fromKey:String) -> Bool

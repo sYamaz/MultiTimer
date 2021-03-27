@@ -6,17 +6,18 @@
 //
 
 import Foundation
+import Combine
 class TimerQueue : TimerStoreDelegate{
 
     
-    var observers = [TimerStoreObserver]()
+    var observers = Dictionary<UUID, TimerStoreObserver>()
     var state:TimerQueueRootState
     init(){
         self.state = TimerQueueRootState()
     }
     
-    func observe(observer: TimerStoreObserver) {
-        observers.append(observer)
+    func observe(id:UUID, observer: TimerStoreObserver) {
+        observers.updateValue(observer, forKey: id)
     }
     
     func getDueDate(fromKey: String) -> Date {
@@ -97,8 +98,8 @@ class TimerQueue : TimerStoreDelegate{
         if(self.state != root)
         {
             self.state = root
-            for i in 0..<observers.count{
-                observers[i].StateChanged(root:self.state)
+            for key in observers.keys{
+                observers[key]?.StateChanged(root: self.state)
             }
         }
     }

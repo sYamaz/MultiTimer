@@ -45,7 +45,7 @@ func ConfigureApp()
     // entity
     Resolver.register(UserSettingStoreDelegate.self){UserSettingStore()}.scope(.application)
     Resolver.register(TimerStoreDelegate.self){TimerQueue()}.scope(.application)
-    Resolver.register(PauseStoreDelegate.self){PauseDateStore()}.scope(.application)
+
 }
 
 /// テストのためのResolverセットアップ
@@ -74,5 +74,5 @@ func ConfigurePreview()
     // entity
     Resolver.register(UserSettingStoreDelegate.self){UserSettingStore()}.scope(.application)
     Resolver.register(TimerStoreDelegate.self){TimerQueue()}.scope(.application)
-    Resolver.register(PauseStoreDelegate.self){PauseDateStore()}.scope(.application)
+
 }

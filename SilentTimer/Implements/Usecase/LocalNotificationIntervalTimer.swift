@@ -10,9 +10,7 @@ import UserNotifications
 class LocalNotificationIntervalTimer : RequestTimerDelegate
 {
     @Injected var queue:TimerStoreDelegate
-    @Injected var pauseStore:PauseStoreDelegate
 
-    
     func startTimer(waitForSeconds: Int) {
         let val = waitForSeconds
         let now = Date()
