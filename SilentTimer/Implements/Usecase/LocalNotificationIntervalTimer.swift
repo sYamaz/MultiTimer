@@ -58,10 +58,7 @@ class LocalNotificationIntervalTimer : RequestTimerDelegate
         else
         {
             self.queue.changePause(fromKey: keyFromQueue)
-            // 通知センターから削除
-            UNUserNotificationCenter
-                .current()
-                .removePendingNotificationRequests(withIdentifiers: [keyFromQueue])
+
             
         }
     }

@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct TimerSettingView: View {
-    @Injected var usecase:MainTimerSettingDelegate
     
-    @State var minutes = 3
-    @State var seconds = 0
+    @State var minutes:Int
+    @State var seconds:Int
     
     @Binding var isEditMode:Bool
+    @Binding var closure:(PresetState) -> Void
     
     var body: some View {
         VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, spacing: /*@START_MENU_TOKEN@*/nil/*@END_MENU_TOKEN@*/, content: {
@@ -44,35 +44,40 @@ struct TimerSettingView: View {
             .padding()
             HStack{
                 Button(action:{isEditMode.toggle()}){
-                    Text("Cancel")
+                    ZStack(alignment: /*@START_MENU_TOKEN@*/Alignment(horizontal: .center, vertical: .center)/*@END_MENU_TOKEN@*/, content: {
+                        Text("Cancel")
+                            .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: .center)
+                            .background(Color(UIColor.systemFill))
+                            .clipShape(Circle())
+                        Circle()
+                            .stroke(Color(UIColor.systemBackground), lineWidth: 2)
+                            .frame(width: 90, height: 90, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                            
+                    })
                 }
-                .padding()
-                .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                .background(Color(UIColor.systemGray6))
-                .cornerRadius(50)
-                .clipped()
-                .shadow(color: Color("shadow.6"), radius: 6, x: 0, y: 0)
                 
                 Spacer()
                 
                 Button(action:
                         {
                             let totalSeconds = self.minutes * 60 + self.seconds
-                            
-                            usecase.createSetting(timerKey: UUID().uuidString, waitForSeconds: totalSeconds)
-                            
+                            let item = PresetState(key: UUID().uuidString, seconds: totalSeconds)
+                            closure(item)
                             isEditMode.toggle()
                         }){
-                    Text("Add")
+                    ZStack(alignment: /*@START_MENU_TOKEN@*/Alignment(horizontal: .center, vertical: .center)/*@END_MENU_TOKEN@*/, content: {
+                        Text("OK")
+                            .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: .center)
+                            .background(Color.accentColor.opacity(0.2))
+                            .clipShape(Circle())
+                        Circle()
+                            .stroke(Color(UIColor.systemBackground), lineWidth: 2)
+                            .frame(width: 90, height: 90, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    })
                 }
-                .padding()
-                .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: .center)
-                .background(Color(UIColor.systemGray6))
-                .cornerRadius(50)
-                .clipped()
-                .shadow(color: Color("shadow.6"), radius: 6, x: 0, y: 0)
-                
-            }.padding()
+                .disabled((self.minutes * 60 + self.seconds) == 0)
+        
+            }.padding(36)
         })
     }
 }
@@ -80,9 +85,6 @@ struct TimerSettingView: View {
 struct TimerSettingView_Previews: PreviewProvider {
     static var previews: some View {
         
-        TimerSettingView(isEditMode: Binding<Bool>(get: {true}, set: {b in }))
-            .onAppear{
-                ConfigurePreview()
-            }
+        TimerSettingView(minutes:1, seconds:35, isEditMode: .constant(true), closure: .constant({st in print(st)}))
     }
 }

@@ -13,18 +13,18 @@ class ContentViewModel : ObservableObject, UserSettingStoreObserver, TimerStoreO
 
     }
     
-    func StateChanged(root: TimerQueueRootState) {
+    func StateChanged(root: TimerRecordRootState) {
         DispatchQueue.main.async {
             self.queue = root
         }
     }
     
-    func StateChanged(root: UserSettingRootState) {
+    func StateChanged(root: PresetRootState) {
         self.root = root
     }
     
-    @Published var root:UserSettingRootState = UserSettingRootState(settings: [UserSettingState]())
+    @Published var root:PresetRootState = PresetRootState(settings: [PresetState]())
     
-    @Published var queue:TimerQueueRootState = TimerQueueRootState()
+    @Published var queue:TimerRecordRootState = TimerRecordRootState()
     
 }

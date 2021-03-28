@@ -9,20 +9,20 @@ import Foundation
 
 
 class UserSettingStore : UserSettingStoreDelegate {
-    var root:UserSettingRootState
+    var root:PresetRootState
     
     var observers:[UserSettingStoreObserver]
     
     init() {
         
-        var defaults = [UserSettingState]()
+        var defaults = [PresetState]()
         if(ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"){
-            defaults.append(UserSettingState(key: "preview_min3", seconds: 180))
-            defaults.append(UserSettingState(key: "preview_min4", seconds: 240))
-            defaults.append(UserSettingState(key: "preview_min5", seconds: 300))
+            defaults.append(PresetState(key: "preview_min3", seconds: 180))
+            defaults.append(PresetState(key: "preview_min4", seconds: 240))
+            defaults.append(PresetState(key: "preview_min5", seconds: 300))
         }
         
-        root = UserSettingRootState(settings:defaults)
+        root = PresetRootState(settings:defaults)
         observers = [UserSettingStoreObserver]()
     }
 
@@ -47,7 +47,7 @@ class UserSettingStore : UserSettingStoreDelegate {
         return -1
     }
     
-    func enumerateValues() -> [UserSettingState] {
+    func enumerateValues() -> [PresetState] {
         print("enumerateValues")
         return self.root.settings
     }
@@ -68,17 +68,17 @@ class UserSettingStore : UserSettingStoreDelegate {
         updateState(newRoot: root.changeWaitForSeconds(keyFrom: key, waitForSeconds: waitForSeconds))
     }
     
-    func Import(root:UserSettingRootState){
+    func Import(root:PresetRootState){
         print("import")
         updateState(newRoot: root)
     }
     
-    func Extract() -> UserSettingRootState{
+    func Extract() -> PresetRootState{
         print("extract")
         return root
     }
     
-    private func updateState(newRoot:UserSettingRootState){
+    private func updateState(newRoot:PresetRootState){
         if(self.root != newRoot){
             self.root = newRoot
             for i in 0..<observers.count{

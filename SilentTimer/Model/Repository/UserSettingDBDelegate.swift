@@ -8,8 +8,8 @@
 import Foundation
 
 protocol UserSettingDBDelegate {
-    func LoadQueue() -> TimerQueueRootState
-    func SaveQueue(state:TimerQueueRootState)
-    func LoadUserSetting() -> UserSettingRootState
-    func SaveUserSetting(state:UserSettingRootState)
+    func LoadQueue() -> TimerRecordRootState
+    func SaveQueue(state:TimerRecordRootState)
+    func LoadUserSetting() -> PresetRootState
+    func SaveUserSetting(state:PresetRootState)
 }

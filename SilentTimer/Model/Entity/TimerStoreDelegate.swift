@@ -20,10 +20,10 @@ protocol TimerStoreDelegate{
     func changeTimeup(fromKey:String)
     func changeRemainSec(fromKey:String, remainSec:Int)
     
-    func extract() -> TimerQueueRootState
-    func load(state:TimerQueueRootState)
+    func extract() -> TimerRecordRootState
+    func load(state:TimerRecordRootState)
 }
 
 protocol TimerStoreObserver{
-    func StateChanged(root:TimerQueueRootState)
+    func StateChanged(root:TimerRecordRootState)
 }

@@ -10,10 +10,6 @@ class TimerSettingService : MainTimerSettingDelegate
 {
     @Injected var store:UserSettingStoreDelegate
     
-    func enumerateKeys() -> [String]{
-        return self.store.GetKeysOfUserSettings()
-    }
-    
     func createSetting(timerKey:String, waitForSeconds:Int){
         store.add(key: timerKey, waitForSeconds: waitForSeconds)
     }

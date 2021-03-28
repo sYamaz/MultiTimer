@@ -8,8 +8,6 @@
 import Foundation
 
 protocol MainTimerSettingDelegate {
-    /// get keys of timer presets
-    func enumerateKeys() -> [String]
     
     /// make timer preset
     /// - Parameters:

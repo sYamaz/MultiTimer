@@ -11,9 +11,9 @@ class TimerQueue : TimerStoreDelegate{
 
     
     var observers = Dictionary<UUID, TimerStoreObserver>()
-    var state:TimerQueueRootState
+    var state:TimerRecordRootState
     init(){
-        self.state = TimerQueueRootState()
+        self.state = TimerRecordRootState()
     }
     
     func observe(id:UUID, observer: TimerStoreObserver) {
@@ -21,9 +21,9 @@ class TimerQueue : TimerStoreDelegate{
     }
     
     func getDueDate(fromKey: String) -> Date {
-        for i in 0..<self.state.queue.count{
-            if(self.state.queue[i].key == fromKey){
-                return self.state.queue[i].dueDate
+        for i in 0..<self.state.records.count{
+            if(self.state.records[i].key == fromKey){
+                return self.state.records[i].dueDate
             }
         }
         
@@ -31,9 +31,9 @@ class TimerQueue : TimerStoreDelegate{
     }
     
     func getRemainSec(fromKey: String) -> Int{
-        for i in 0..<self.state.queue.count{
-            if(self.state.queue[i].key == fromKey){
-                return self.state.queue[i].remainSec
+        for i in 0..<self.state.records.count{
+            if(self.state.records[i].key == fromKey){
+                return self.state.records[i].remainSec
             }
         }
         
@@ -41,9 +41,9 @@ class TimerQueue : TimerStoreDelegate{
     }
 
     func getIsPaused(fromKey: String) -> Bool {
-        for i in 0..<self.state.queue.count{
-            if(self.state.queue[i].key == fromKey){
-                return self.state.queue[i].isPaused
+        for i in 0..<self.state.records.count{
+            if(self.state.records[i].key == fromKey){
+                return self.state.records[i].isPaused
             }
         }
         
@@ -51,16 +51,16 @@ class TimerQueue : TimerStoreDelegate{
     }
     
     func getIsTimeup(fromKey: String) -> Bool{
-        for i in 0..<self.state.queue.count{
-            if(self.state.queue[i].key == fromKey){
-                return self.state.queue[i].timeup
+        for i in 0..<self.state.records.count{
+            if(self.state.records[i].key == fromKey){
+                return self.state.records[i].timeup
             }
         }
         return false
     }
     
     func getKeys() -> [String] {
-        return Array(state.queue.map{$0.key})
+        return Array(state.records.map{$0.key})
     }
     
     func remove(fromKey: String) {
@@ -85,15 +85,15 @@ class TimerQueue : TimerStoreDelegate{
         Update(root: state.changeRemainSec(fromKey:fromKey, remainSec:remainSec))
     }
    
-    func extract() -> TimerQueueRootState {
+    func extract() -> TimerRecordRootState {
         return self.state
     }
     
-    func load(state: TimerQueueRootState) {
+    func load(state: TimerRecordRootState) {
         Update(root: state)
     }
     
-    private func Update(root:TimerQueueRootState)
+    private func Update(root:TimerRecordRootState)
     {
         if(self.state != root)
         {

@@ -8,13 +8,13 @@
 import Foundation
 
 class UserDefaultRepository: UserSettingDBDelegate {
-    func LoadQueue() -> TimerQueueRootState {
+    func LoadQueue() -> TimerRecordRootState {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         
         guard let data = UserDefaults.standard.data(forKey: "queue.v1"),
-            let state = try? decoder.decode(TimerQueueRootState.self, from: data) else{
-                return TimerQueueRootState()
+            let state = try? decoder.decode(TimerRecordRootState.self, from: data) else{
+                return TimerRecordRootState()
             }
      
         
@@ -25,7 +25,7 @@ class UserDefaultRepository: UserSettingDBDelegate {
         return state
     }
     
-    func SaveQueue(state: TimerQueueRootState) {
+    func SaveQueue(state: TimerRecordRootState) {
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .convertToSnakeCase
         
@@ -37,25 +37,25 @@ class UserDefaultRepository: UserSettingDBDelegate {
     }
 
     
-    func LoadUserSetting() -> UserSettingRootState {
+    func LoadUserSetting() -> PresetRootState {
         
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         
         guard let data = UserDefaults.standard.data(forKey: "setting.v1"),
-            let state = try? decoder.decode(UserSettingRootState.self, from: data) else{
+            let state = try? decoder.decode(PresetRootState.self, from: data) else{
             
-            var defaults = [UserSettingState]()
-            let min3 = UserSettingState.init(key:"3min", seconds: 180)
-            let min4 = UserSettingState.init(key: "4min", seconds: 240)
-            let min5 = UserSettingState.init(key: "5min", seconds: 300)
+            var defaults = [PresetState]()
+            let min3 = PresetState.init(key:"3min", seconds: 180)
+            let min4 = PresetState.init(key: "4min", seconds: 240)
+            let min5 = PresetState.init(key: "5min", seconds: 300)
             
             defaults.append(min3)
             defaults.append(min4)
             defaults.append(min5)
             
             
-            return UserSettingRootState(settings: defaults)
+            return PresetRootState(settings: defaults)
                
             }
         
@@ -66,7 +66,7 @@ class UserDefaultRepository: UserSettingDBDelegate {
     
     }
     
-    func SaveUserSetting(state: UserSettingRootState) {
+    func SaveUserSetting(state: PresetRootState) {
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .convertToSnakeCase
         

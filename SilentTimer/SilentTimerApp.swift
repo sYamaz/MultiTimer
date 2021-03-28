@@ -11,9 +11,6 @@ import AVFoundation
 
 class AppDelegate : UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate
 {
-    @Injected var initializer:StateInitializerDelegate
-    @Injected var queueInitializer: RequestTimerDelegate
-
     // アプリケーション起動直後の初期
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool
     {
@@ -29,9 +26,6 @@ class AppDelegate : UIResponder, UIApplicationDelegate, UNUserNotificationCenter
                     UNUserNotificationCenter.current().delegate = self
                 }
             }
-        
-        initializer.Initialize()
-        
         return true;
     }
     
@@ -66,14 +60,16 @@ class AppDelegate : UIResponder, UIApplicationDelegate, UNUserNotificationCenter
     
     // アプリケーション終了処理
     func applicationWillTerminate(_ application: UIApplication) {
-        initializer.Finalize()
+
     }
 }
 
 @main
 struct SilentTimerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    @Injected var initializer:StateInitializerDelegate
+    @Environment(\.scenePhase) private var scenePhase
+
+    
     var body: some Scene {
         WindowGroup {
             ContentView()

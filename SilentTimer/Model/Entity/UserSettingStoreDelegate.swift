@@ -9,14 +9,14 @@ import Foundation
 protocol UserSettingStoreDelegate {
     func Observe(observer: UserSettingStoreObserver)
     // for initialize
-    func Import(root:UserSettingRootState)
+    func Import(root:PresetRootState)
     // for finalyze
-    func Extract() -> UserSettingRootState
+    func Extract() -> PresetRootState
     // get
     func GetKeysOfUserSettings() -> [String]
     // get
     func GetWaitForSeconds(keyFrom: String) -> Int
-    func enumerateValues() -> [UserSettingState]
+    func enumerateValues() -> [PresetState]
     
     // command
     func add(key:String, waitForSeconds:Int)
@@ -27,5 +27,5 @@ protocol UserSettingStoreDelegate {
 }
 
 protocol UserSettingStoreObserver{
-    func StateChanged(root:UserSettingRootState)
+    func StateChanged(root:PresetRootState)
 }

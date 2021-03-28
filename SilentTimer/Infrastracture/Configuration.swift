@@ -28,20 +28,7 @@ extension Resolver : ResolverRegistering{
     
 func ConfigureApp()
 {
-    Resolver.register(TimerDelegate.self){TimerWrapper()}.scope(.application)
-    
-    // ViewModel
-    Resolver.register(ContentViewModel.self){ContentViewModel()}.scope(.graph)
-    
-    // Usecase
-    Resolver.register(MainTimerSettingDelegate.self){ TimerSettingService() }.scope(.graph)
-    Resolver.register(RequestTimerDelegate.self){ LocalNotificationIntervalTimer() }.scope(.graph)
-    Resolver.register(StateInitializerDelegate.self){StateInitializer()}.scope(.graph)
-    
-    // repository
-    Resolver.register(UserSettingDBDelegate.self){ UserDefaultRepository() }.scope(.application)
 
-        
     // entity
     Resolver.register(UserSettingStoreDelegate.self){UserSettingStore()}.scope(.application)
     Resolver.register(TimerStoreDelegate.self){TimerQueue()}.scope(.application)
@@ -57,20 +44,6 @@ func ConfigureTest()
 /// preview表示のためのResolverセットアップ
 func ConfigurePreview()
 {
-    Resolver.register(TimerDelegate.self){TimerWrapper()}.scope(.application)
-    
-    // ViewModel
-    Resolver.register(ContentViewModel.self){ContentViewModel()}.scope(.graph)
-    
-    // Usecase
-    Resolver.register(MainTimerSettingDelegate.self){ TimerSettingService() }.scope(.graph)
-    Resolver.register(RequestTimerDelegate.self){ LocalNotificationIntervalTimer() }.scope(.graph)
-    Resolver.register(StateInitializerDelegate.self){StateInitializer()}.scope(.graph)
-    
-    // repository
-    Resolver.register(UserSettingDBDelegate.self){ UserDefaultRepository() }.scope(.application)
-
-    
     // entity
     Resolver.register(UserSettingStoreDelegate.self){UserSettingStore()}.scope(.application)
     Resolver.register(TimerStoreDelegate.self){TimerQueue()}.scope(.application)
