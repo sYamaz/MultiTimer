@@ -18,6 +18,9 @@ struct PresetView: View {
     /// TimerSettingViewに引き渡す初期表示値
     @State var seconds:Int = 0
     
+    /// animation
+    @State var itemKey:String = ""
+    
     @Binding var presets:PresetRootState
     @Binding var records:TimerRecordRootState
     @Binding var ongoingCount:Int
@@ -71,20 +74,35 @@ struct PresetView: View {
                     if(!isEditMode){
                         Button(
                             action: {
-                                
                                 let record = item.ToRecord(id: UUID(), now: Date())
                                 records = records.append(record)
                                 let request = record.toNotificationRequest(title: "ローカル通知テスト", subtitle: "タイマー通知", body: "タイマーによるローカル通知です")
                                 request.send()
-                                
                                 self.ongoingCount = records.records.filter({r in !r.timeup}).count
+                                
+                                // animation
+                                withAnimation(Animation.default){
+                                    self.itemKey = item.key
+                                }
+                                
+                                withAnimation(Animation.default.delay(0.5)){
+                                    self.itemKey = ""
+                                }
                             },
                             label: {
-                                VStack(alignment: .leading, spacing: /*@START_MENU_TOKEN@*/nil/*@END_MENU_TOKEN@*/, content: {
-                                    Text(txt)
-                                        .font(.largeTitle)
-                                    Text("Timer")
-                                        .font(.subheadline)
+                                HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, spacing: /*@START_MENU_TOKEN@*/nil/*@END_MENU_TOKEN@*/, content: {
+                                    VStack(alignment: .leading, spacing: /*@START_MENU_TOKEN@*/nil/*@END_MENU_TOKEN@*/, content: {
+                                        Text(txt)
+                                            .font(.largeTitle)
+                                        Text("Timer")
+                                            .font(.subheadline)
+                                    })
+                                  
+                                    if(self.itemKey == item.key){
+                                        Spacer()
+                                        Text("Timer started.")
+                                            .transition(.move(edge: .trailing))
+                                    }
                                 })
                             })
                     }
